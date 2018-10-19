@@ -1,0 +1,3644 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_SELF",
+      "label": "Self",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "DS_INFLUX",
+      "label": "Influx",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "5.0.4"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "5.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "vonage-status-panel",
+      "name": "Status Panel",
+      "version": "1.0.7"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1539785219013,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "panels": [],
+      "title": "pfSense",
+      "type": "row"
+    },
+    {
+      "clusterName": "CallFin GW",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "CallFin GW",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 16,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"gw1.callfin.ltd\"}/node_memory_size_bytes{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"gw1.callfin.ltd\",mountpoint=\"/\"}/node_filesystem_size{job=\"gw1.callfin.ltd\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.8
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"gw1.callfin.ltd\",device='vmx2'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "Bps",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.24.1",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "HolytopMedia GW",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "HolytopMedia GW",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "id": 36,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.holytop\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"gw1.holytop\"}/node_memory_size_bytes{job=\"gw1.holytop\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"gw1.holytop\",mountpoint=\"/\"}/node_filesystem_size{job=\"gw1.holytop\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.8
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Always",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"gw1.holytop\",device='em2'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.20.1",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "AielMarketing GW2",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "AielMarketing GW2",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "id": 37,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.aiel2\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"gw1.aiel2\"}/node_memory_size_bytes{job=\"gw1.aiel2\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"gw1.aiel2\",mountpoint=\"/\"}/node_filesystem_size{job=\"gw1.aiel2\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.8
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"gw1.aiel2\",device='vmx0'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "Bps",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.19.1",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "AielMarketing GW1",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "AielMarketing GW1",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "id": 38,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.aiel1\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"gw1.aiel1\"}/node_memory_size_bytes{job=\"gw1.aiel1\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"gw1.aiel1\",mountpoint=\"/\"}/node_filesystem_size{job=\"gw1.aiel1\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.8
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"gw1.aiel1\",device='vmx1'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.16.1",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "VantuCapital GW",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "VantuCapital GW",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "id": 39,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.vantucapital\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"gw1.vantucapital\"}/node_memory_size_bytes{job=\"gw1.vantucapital\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"gw1.vantucapital\",mountpoint=\"/\"}/node_filesystem_size{job=\"gw1.vantucapital\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.8
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"gw1.vantucapital\",device='vmx2'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.18.1",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "Targaryen GW",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "Targaryen GW",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "id": 40,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.targaryen\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"gw1.targaryen\"}/node_memory_size_bytes{job=\"gw1.targaryen\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"gw1.targaryen\",mountpoint=\"/\"}/node_filesystem_size{job=\"gw1.targaryen\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.8
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"gw1.targaryen\",device='vmx2'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.17.1",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 32,
+      "panels": [],
+      "title": "WWW",
+      "type": "row"
+    },
+    {
+      "clusterName": "www.cfsum.com",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "www.cfsum.com",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 6
+      },
+      "id": 41,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"www.cfsum.com\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"www.cfsum.com\"}/node_memory_size_bytes{job=\"www.cfsum.com\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.9,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"www.cfsum.com\",mountpoint=\"/\"}/node_filesystem_size{job=\"www.cfsum.com\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"www.cfsum.com\",device='ens192'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "Bps",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.18.14",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "72option,ivoryoption",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "72option,ivoryoption",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 6
+      },
+      "id": 35,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"www.72option.com\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"www.72option.com\"}/node_memory_size_bytes{job=\"www.72option.com\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.9,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"www.72option.com\",mountpoint=\"/\"}/node_filesystem_size{job=\"www.72option.com\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"www.72option.com\",device='em0'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "Bps",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.16.50",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "www.roiteks.com",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "www.roiteks.com",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 6
+      },
+      "id": 42,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"www.roiteks.com\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"www.roiteks.com\"}/node_memory_size_bytes{job=\"www.roiteks.com\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.9,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"www.roiteks.com\",mountpoint=\"/\"}/node_filesystem_size{job=\"www.roiteks.com\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"www.roiteks.com\",device='ens192'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "Bps",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.18.15",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "mrwolf",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_SELF}",
+      "displayName": "mrwolf",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 6
+      },
+      "id": 34,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/pfsense",
+          "dashboard": "pfSense",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "pfSense Gateways",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"www.mrwolf.solutions\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "refId": "A",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, Mb",
+          "crit": 0.95,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_memory_free_bytes{job=\"www.mrwolf.solutions\"}/node_memory_size_bytes{job=\"www.mrwolf.solutions\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "RAM, Mb",
+          "refId": "B",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, Mb",
+          "crit": 0.9,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "1-node_filesystem_avail{job=\"www.mrwolf.solutions\",mountpoint=\"/\"}/node_filesystem_size{job=\"www.mrwolf.solutions\",mountpoint=\"/\"} ",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "HDD, Mb",
+          "refId": "C",
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "NW traffic",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_network_transmit_errs{job=\"www.mrwolf.solutions\",device='vmx0'}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NW errors",
+          "refId": "D",
+          "units": "Bps",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        }
+      ],
+      "title": "172.29.17.5",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 4,
+      "panels": [],
+      "title": "Zimbra",
+      "type": "row"
+    },
+    {
+      "clusterName": "CallFin Mail",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_INFLUX}",
+      "displayName": "CallFin Mail",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 11
+      },
+      "id": 22,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/zimbra-collaboration-system-dashboard",
+          "dashboard": "Zimbra Collaboration: System Dashboard",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "Zimbra Collaboration: System Dashboard",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "measurement": "system",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load5"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "mem",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Mail queue",
+          "crit": 100,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "zimbra_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT difference(mean(\"bounced\")) + difference(mean(\"deferred\")) + difference(mean(\"delivered\")) + difference(mean(\"discarded\")) + difference(mean(\"forwarded\")) + difference(mean(\"held\")) + difference(mean(\"received\")) + difference(mean(\"rejected\")) FROM \"zimbra_stats\" WHERE (\"host\" = 'mail.callfin.ltd') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deferred"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [],
+                "type": "difference"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 50
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Net error",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "net",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"err_out\") FROM \"net\" WHERE (\"host\" = 'mail.callfin.ltd') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "err_out"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Zextras Expire",
+          "crit": -5,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [],
+          "measurement": "zextras",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *-1"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": -10
+        }
+      ],
+      "title": "172.29.25.5",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "HolytopMedia Mail",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_INFLUX}",
+      "displayName": "HolytopMedia Mail",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 11
+      },
+      "id": 23,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/zimbra-collaboration-system-dashboard",
+          "dashboard": "Zimbra Collaboration: System Dashboard",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "Zimbra Collaboration: System Dashboard",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 90,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "measurement": "system",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load5"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.holytopmedia.com"
+            }
+          ],
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "mem",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.holytopmedia.com"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.holytopmedia.com"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Mail queue",
+          "crit": 100,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "zimbra_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT difference(mean(\"bounced\")) + difference(mean(\"deferred\")) + difference(mean(\"delivered\")) + difference(mean(\"discarded\")) + difference(mean(\"forwarded\")) + difference(mean(\"held\")) + difference(mean(\"received\")) + difference(mean(\"rejected\")) FROM \"zimbra_stats\" WHERE (\"host\" = 'mail.holytopmedia.com') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deferred"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [],
+                "type": "difference"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 50
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Net Error",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "net",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"err_out\") FROM \"net\" WHERE (\"host\" = 'mail.callfin.ltd') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "err_out"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.holytopmedia.com"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Zextras Expire",
+          "crit": -5,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [],
+          "measurement": "zextras",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *-1"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.holytopmedia.com"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": -10
+        }
+      ],
+      "title": "172.29.22.70",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "CFSum Mail",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_INFLUX}",
+      "displayName": "CFSum Mail",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 11
+      },
+      "id": 24,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/zimbra-collaboration-system-dashboard",
+          "dashboard": "Zimbra Collaboration: System Dashboard",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "Zimbra Collaboration: System Dashboard",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "measurement": "system",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load5"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.cfsum.com"
+            }
+          ],
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "mem",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.cfsum.com"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.cfsum.com"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Mail queue",
+          "crit": 100,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "zimbra_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"bounced\") +  mean(\"deferred\") + mean(\"delivered\") + mean(\"discarded\") + mean(\"forwarded\") + mean(\"held\") + mean(\"received\") FROM \"zimbra_stats\" WHERE (\"host\" = 'mail.cfsum.com') AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deferred"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [],
+                "type": "difference"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 50
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Net Error",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "net",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "err_out"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.cfsum.com"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Zextras Expire",
+          "crit": -5,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [],
+          "measurement": "zextras",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *-1"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.cfsum.com"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": -10
+        }
+      ],
+      "title": "172.29.19.4",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "Aielmarketing Mail",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_INFLUX}",
+      "displayName": "Aielmarketing Mail",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 11
+      },
+      "id": 25,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/zimbra-collaboration-system-dashboard",
+          "dashboard": "Zimbra Collaboration: System Dashboard",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "Zimbra Collaboration: System Dashboard",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "measurement": "system",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"load5\") FROM \"system\" WHERE (\"host\" = 'mail.aielmarketing.com') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load5"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.aielmarketing.com"
+            }
+          ],
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "mem",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.aielmarketing.com"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.aielmarketing.com"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Mail queue",
+          "crit": 100,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "zimbra_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT difference(mean(\"bounced\")) + difference(mean(\"deferred\")) + difference(mean(\"delivered\")) + difference(mean(\"discarded\")) + difference(mean(\"forwarded\")) + difference(mean(\"held\")) + difference(mean(\"received\")) + difference(mean(\"rejected\")) FROM \"zimbra_stats\" WHERE (\"host\" = 'mail.aielmarketing.com') AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deferred"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [],
+                "type": "difference"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 50
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Net Error",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "net",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "err_out"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.aielmarketing.com"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Zextras Expire",
+          "crit": -5,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [],
+          "measurement": "zextras",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *-1"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.aielmarketing.com"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": -10
+        }
+      ],
+      "title": "172.29.16.41",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "Vantucapital Mail",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_INFLUX}",
+      "displayName": "Vantucapital Mail",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 11
+      },
+      "id": 26,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/zimbra-collaboration-system-dashboard",
+          "dashboard": "Zimbra Collaboration: System Dashboard",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "Zimbra Collaboration: System Dashboard",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "measurement": "system",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load5"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.vantucapital.ltd"
+            }
+          ],
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "mem",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.vantucapital.ltd"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.vantucapital.ltd"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Mail queue",
+          "crit": 100,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "zimbra_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT difference(mean(\"bounced\")) + difference(mean(\"deferred\")) + difference(mean(\"delivered\")) + difference(mean(\"discarded\")) + difference(mean(\"forwarded\")) + difference(mean(\"held\")) + difference(mean(\"received\")) + difference(mean(\"rejected\")) FROM \"zimbra_stats\" WHERE (\"host\" = 'mail.vantucapital.ltd') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deferred"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [],
+                "type": "difference"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 50
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Net Error",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "net",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "err_out"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.aielmarketing.com"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Zextras Expire",
+          "crit": -5,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [],
+          "measurement": "zextras",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " *-1"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.vantucapital.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": -10
+        }
+      ],
+      "title": "172.29.18.40",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "clusterName": "Targaryen Mail",
+      "colorMode": "Panel",
+      "colors": {
+        "crit": "rgba(245, 54, 54, 0.9)",
+        "disable": "rgba(128, 128, 128, 0.9)",
+        "ok": "rgba(50, 128, 45, 0.9)",
+        "warn": "rgba(237, 129, 40, 0.9)"
+      },
+      "cornerRadius": 0,
+      "datasource": "${DS_INFLUX}",
+      "displayName": "Targaryen Mail",
+      "flipCard": false,
+      "flipTime": 5,
+      "fontFormat": "Regular",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 11
+      },
+      "id": 30,
+      "isGrayOnNoData": true,
+      "isHideAlertsOnDisable": false,
+      "isIgnoreOKColors": false,
+      "links": [
+        {
+          "dashUri": "db/zimbra-collaboration-system-dashboard",
+          "dashboard": "Zimbra Collaboration: System Dashboard",
+          "includeVars": true,
+          "params": "",
+          "targetBlank": true,
+          "title": "Zimbra Collaboration: System Dashboard",
+          "type": "dashboard"
+        }
+      ],
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "System Load",
+          "crit": 0.95,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "expr": "node_load5{job=\"gw1.callfin.ltd\"}",
+          "format": "time_series",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "intervalFactor": 1,
+          "legendFormat": "System Load",
+          "measurement": "system",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load5"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.targaryen.marketing"
+            }
+          ],
+          "units": "percentunit",
+          "valueHandler": "Number Threshold",
+          "warn": 0.75
+        },
+        {
+          "aggregation": "Last",
+          "alias": "RAM, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "mem",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.targaryen.marketing"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "HDD, %",
+          "crit": 90,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "disk",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"used_percent\") FROM \"disk\" WHERE (\"host\" = 'mail.targaryen.marketing') AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": false,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "used_percent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.targaryen.marketing"
+            }
+          ],
+          "units": "percent",
+          "valueHandler": "Number Threshold",
+          "warn": 80
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Mail queue",
+          "crit": 100,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "zimbra_stats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT difference(mean(\"bounced\")) + difference(mean(\"deferred\")) + difference(mean(\"delivered\")) + difference(mean(\"discarded\")) + difference(mean(\"forwarded\")) + difference(mean(\"held\")) + difference(mean(\"received\")) + difference(mean(\"rejected\")) FROM \"zimbra_stats\" WHERE (\"host\" = 'mail.targaryen.marketing') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "deferred"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [],
+                "type": "difference"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.callfin.ltd"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 50
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Net Error",
+          "crit": 10,
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "net",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "err_out"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.targaryen.marketing"
+            }
+          ],
+          "units": "none",
+          "valueHandler": "Number Threshold",
+          "warn": 5
+        },
+        {
+          "aggregation": "Last",
+          "alias": "Zextras Expire",
+          "crit": -5,
+          "decimals": null,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "When Alias Displayed",
+          "groupBy": [],
+          "measurement": "zextras",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" *-1 FROM \"zextras\" WHERE (\"host\" = 'mail.targaryen.marketing') AND $timeFilter",
+          "rawQuery": false,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "*-1"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=",
+              "value": "mail.targaryen.marketing"
+            }
+          ],
+          "units": "short",
+          "valueHandler": "Number Threshold",
+          "warn": -10
+        }
+      ],
+      "title": "172.29.17.40",
+      "transparent": false,
+      "type": "vonage-status-panel"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 8,
+      "panels": [],
+      "title": "ESXi",
+      "type": "row"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "callfin_node",
+        "multi": false,
+        "name": "callfin_node",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/(172.29.24.1):9100/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "callfin_port",
+        "multi": false,
+        "name": "callfin_port",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/172.29.24.1:(.*)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "holytop_node",
+        "multi": false,
+        "name": "holytop_node",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/(172.29.20.1):9100/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "holytop_port",
+        "multi": false,
+        "name": "holytop_port",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/172.29.20.1:(.*)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "targaryen_node",
+        "multi": false,
+        "name": "targaryen_node",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/(172.29.17.1):9100/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "targaryen_port",
+        "multi": false,
+        "name": "targaryen_port",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/172.29.17.1:(.*)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "vantu_node",
+        "multi": false,
+        "name": "vantu_node",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/(172.29.18.1):9100/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "vantu_port",
+        "multi": false,
+        "name": "vantu_port",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/172.29.18.1:(.*)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "aiel2_node",
+        "multi": false,
+        "name": "aiel2_node",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/(172.29.19.1):9100/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "aiel2_port",
+        "multi": false,
+        "name": "aiel2_port",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/172.29.19.1:(.*)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "aiel1_node",
+        "multi": false,
+        "name": "aiel1_node",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/(172.29.16.1):9100/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SELF}",
+        "hide": 2,
+        "includeAll": false,
+        "label": "aiel1_port",
+        "multi": false,
+        "name": "aiel1_port",
+        "options": [],
+        "query": "label_values(instance)",
+        "refresh": 1,
+        "regex": "/172.29.16.1:(.*)/",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "Infrastructure",
+  "uid": "SlZjt4Gmk",
+  "version": 76
+}
