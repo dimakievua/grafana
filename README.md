@@ -4,5 +4,3 @@ Infrastructure example is using Status Panel plugin (grafana-cli plugins install
 Some dashboards use Prometheus as datasource. Some InflixDB.
 
 Added with git mergetool
-
-New line.
